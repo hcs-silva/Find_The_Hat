@@ -90,7 +90,9 @@ class Field {
         newField[i].push(fieldCharacter);
       }
     }
-    newField[0][0] = pathCharacter;
+
+    //Randomly place the Character
+    newField[Math.floor(Math.random() * width)][Math.floor(Math.random() * height)] = pathCharacter;
 
     // Place the hat randomly
     let hatX = Math.floor(Math.random() * width);
