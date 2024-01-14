@@ -26,7 +26,11 @@ class Field {
       // Prompt user for direction input
       const direction = prompt('Which direction would you like to move? Please enter N for North, S for South, E for East, or W for West.\n');
 
-     
+      //Added cancelation key press
+      if (direction === 'c') {
+        console.log('Game cancelled by user');
+        break;
+      }
        
       // Handle different directions
       if (direction.toUpperCase() === 'N') {
