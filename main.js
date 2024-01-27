@@ -9,9 +9,10 @@ const pathCharacter = '*';
 
 // Definition of the 'Field' class
 class Field {
-  constructor(hatAndHoles, field) {
+  constructor(hatAndHoles, field, counter) {
     this._field = field;
     this._hatAndHoles = hatAndHoles;
+    this._counter = counter;
   }
 
   // Method to play the game
@@ -20,6 +21,10 @@ class Field {
     let y = 0;
     let x = 0;
     this.print(this._field);
+
+    const dificulty = prompt('Choose Dificulty: Easy(E)/Hard(H)\n');
+
+    if(dificulty === 'e') {
 
     // Main game loop
     while (this._hatAndHoles[y][x] === pathCharacter || this._hatAndHoles[y][x] === fieldCharacter) {
@@ -72,7 +77,72 @@ class Field {
         this.print(this._field);
       }
     }
+  } else if (dificulty === 'h'){
+    // Add a counter variable outside the loop
+let turnCounter = 0;
+
+while (this._hatAndHoles[y][x] === pathCharacter || this._hatAndHoles[y][x] === fieldCharacter) {
+ 
+
+  // Increment the turn counter
+  turnCounter++;
+
+  // Check if it's the third turn (every three turns)
+  if (turnCounter % 3 === 0) {
+    // Add three new random holes to the game board
+    this.addRandomHoles(3);
   }
+
+
+}
+
+// Add a new method to the class to randomly add holes
+Field.prototype.addRandomHoles = function(numHoles) {
+  for (let i = 0; i < numHoles; i++) {
+    let randomX = Math.floor(Math.random() * this._field[0].length);
+    let randomY = Math.floor(Math.random() * this._field.length);
+
+    // Check if the random position is not the current player's position or the hat's position
+    while (
+      (randomX === x && randomY === y) ||
+      this._hatAndHoles[randomY][randomX] === hat ||
+      this._hatAndHoles[randomY][randomX] === hole
+    ) {
+      randomX = Math.floor(Math.random() * this._field[0].length);
+      randomY = Math.floor(Math.random() * this._field.length);
+    }
+
+    // Add a hole at the random position
+    this._hatAndHoles[randomY][randomX] = hole;
+  }
+}
+
+  }else {
+    console.log('Invalid Dificulty');
+    return;
+  };
+
+  // Method to add random holes
+  addRandomHoles(numHoles) {
+    for (let i = 0; i < numHoles; i++) {
+      let randomX = Math.floor(Math.random() * this._field[0].length);
+      let randomY = Math.floor(Math.random() * this._field.length);
+
+      // Check if the random position is not the current player's position or the hat's position
+      while (
+        (randomX === x && randomY === y) ||
+        this._hatAndHoles[randomY][randomX] === hat ||
+        this._hatAndHoles[randomY][randomX] === hole
+      ) {
+        randomX = Math.floor(Math.random() * this._field[0].length);
+        randomY = Math.floor(Math.random() * this._field.length);
+      }
+
+      // Add a hole at the random position
+      this._hatAndHoles[randomY][randomX] = hole;
+    }
+  }
+}
 
   // Method to print the field
   print() {
